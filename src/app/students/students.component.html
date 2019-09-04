@@ -1,0 +1,51 @@
+<p>
+  Students
+</p>
+
+<!-- <label>Student name:</label>
+<input (input)="onUpdateStudentName($event)" type="text" /> -->
+
+<!-- Two-Way Data Binding -->
+<!-- <label>Student name:</label>
+<input [(ngModel)]="name" type="text" />
+<label>{{ name }}</label> -->
+
+<!--1 Directive (instrukcija u DOMu) postoje jos i ngStyle, ngClass... njih stavljamoo u []-->
+<!-- [ngStyle] = "{backgroundColor: getColor()}"
+     [ngClass] = "{highlighted: isHihglighted === true}"
+-->
+<!--2 Event Binding -->
+<!--3 Property Binding -->
+
+<input
+  type="text"
+  class="form-control"
+  #nameInput
+  (keyup.enter)="onCreateStudent(nameInput)"
+/>
+
+<button
+  *ngIf="allowAdding; else noAdding"
+  (click)="onCreateStudent()"
+  [disabled]="!allowAdding"
+  class="btn btn-primary"
+>
+  Add Student
+</button>
+
+<ng-template #noAdding>
+  <p>Adding is not allowed</p>
+</ng-template>
+<!-- <app-student></app-student>
+<app-student></app-student>
+<app-student></app-student>
+
+<app-student *ngFor="let student of students"></app-student> -->
+
+<ul class="list-group">
+  <li *ngFor="let student of students; index as i" class="list-group-item">
+    <button (click)="onUpdateStudent(student)">Update</button>
+    {{ i }}) {{ student.name }}
+    <button (click)="onDeleteStudent(student)">Delete</button>
+  </li>
+</ul>
