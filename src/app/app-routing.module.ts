@@ -6,12 +6,36 @@ import { HomeComponent } from "./home/home.component";
 import { CourseComponent } from "./course/course.component";
 import { StudentComponent } from "./student/student.component";
 import { ErrorComponent } from "./error/error.component";
+import { ProfessorComponent } from "./professor/professor.component";
+import { ProfessorsComponent } from "./professors/professors.component";
+import { LoginComponent } from "./login/login.component";
+import { RegisterComponent } from "./register/register.component";
 
 //Od specificnih ka opstim
 const routes: Routes = [
   {
-    path: "",
-    component: HomeComponent
+    path: "auth/login",
+    component: LoginComponent
+  },
+  {
+    path: "auth/register",
+    component: RegisterComponent
+  },
+  {
+    path: "students/:id",
+    component: StudentComponent
+  },
+  {
+    path: "students",
+    component: StudentsComponent
+  },
+  {
+    path: "professors/:id",
+    component: ProfessorComponent
+  },
+  {
+    path: "professors",
+    component: ProfessorsComponent
   },
   {
     path: "courses/:id",
@@ -22,12 +46,8 @@ const routes: Routes = [
     component: CoursesComponent
   },
   {
-    path: "students/:id",
-    component: StudentComponent
-  },
-  {
-    path: "students",
-    component: StudentsComponent
+    path: "",
+    component: HomeComponent
   },
   {
     path: "**",

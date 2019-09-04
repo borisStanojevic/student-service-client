@@ -16,7 +16,8 @@ import { StudentService } from "./services/student.service";
 import { ProfessorComponent } from "./professor/professor.component";
 import { ProfessorsComponent } from "./professors/professors.component";
 import { NavbarComponent } from "./navbar/navbar.component";
-import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -31,7 +32,8 @@ import { FooterComponent } from './footer/footer.component';
     ProfessorComponent,
     ProfessorsComponent,
     NavbarComponent,
-    FooterComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpModule],
   providers: [StudentService],
