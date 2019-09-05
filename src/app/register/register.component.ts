@@ -73,6 +73,13 @@ export class RegisterComponent implements OnInit {
     // if (!isValid) {
     //   this.form.setErrors({ invalidLogin: true });
     // }
+    //Ako hocemo da validiraamo na submit
+    // Object.keys(this.form.controls).forEach(field => { // {1}
+    //   const control = this.form.get(field);            // {2}
+    //   control.markAsTouched({ onlySelf: true });       // {3}
+    // });
+    //i u tempalete-u iznad recimo submit dugmeta dodati div sa form.errors
+    //gdje ce se prikazati sve greske
   }
 
   ngOnInit() {}
