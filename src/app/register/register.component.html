@@ -1,1 +1,114 @@
 <h2>Register</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div *ngIf="form.errors" class="alert alert-danger">
+    Username/password invalid
+  </div>
+
+  <!-- <div formGroupName="account">
+    <div class="form-group">
+      <label for="username">Username:</label
+      ><input
+        formControlName="username"
+        id="username"
+        type="text"
+        class="form-control"
+      />
+      <div *ngIf="username.pending">Checking username</div>
+      <div
+        *ngIf="username.touched && username.invalid"
+        class="alert alert-danger"
+      >
+        <div *ngIf="username.errors.required">Username required</div>
+        <div *ngIf="username.errors.minlength">
+          Username should be minimum
+          {{ username.errors.minlength.requiredLength }} characters
+        </div>
+        <div *ngIf="username.errors.cannotContainSpace">
+          Username can not contain space
+        </div>
+        <div *ngIf="username.errors.shouldBeUnique">
+          Username is already taken
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label
+      ><input
+        formControlName="username"
+        id="password"
+        type="password"
+        class="form-control"
+        required
+      />
+    </div>
+  </div> -->
+
+  <div class="form-group">
+    <label for="username">Username:</label
+    ><input
+      formControlName="username"
+      id="username"
+      type="text"
+      class="form-control"
+    />
+    <div *ngIf="username.pending">Checking username</div>
+    <div
+      *ngIf="username.touched && username.invalid"
+      class="alert alert-danger"
+    >
+      <div *ngIf="username.errors.required">Username required</div>
+      <div *ngIf="username.errors.minlength">
+        Username should be minimum
+        {{ username.errors.minlength.requiredLength }} characters
+      </div>
+      <div *ngIf="username.errors.cannotContainSpace">
+        Username can not contain space
+      </div>
+      <div *ngIf="username.errors.shouldBeUnique">
+        Username is already taken
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password:</label
+    ><input
+      formControlName="username"
+      id="password"
+      type="password"
+      class="form-control"
+      required
+    />
+  </div>
+
+  <input
+    type="text"
+    class="form-control"
+    (keyup.enter)="addCourse(course)"
+    #course
+  />
+
+  <ul class="list-group">
+    <li
+      *ngFor="let course of courses.controls"
+      (click)="removeCourse(course)"
+      class="list-group-item"
+    >
+      {{ course.value }}
+    </li>
+  </ul>
+
+  <p>
+    {{ registerForm.value | json }}
+  </p>
+
+  <button
+    [disabled]="!registerForm.valid"
+    type="submit"
+    class="btn btn-primary"
+  >
+    Register
+  </button>
+</form>
