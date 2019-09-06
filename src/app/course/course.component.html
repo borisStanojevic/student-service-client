@@ -1,5 +1,112 @@
-<h2>Course Component</h2>
+<h2>Course</h2>
 
-<p>Course Component with ID {{ id }}</p>
+<form [formGroup]="form" (ngSubmit)="onSave()">
+  <p>
+    {{ form.value | json }}
+  </p>
 
-<button class="btn btn-primary" (click)="onSave()">Save</button>
+  <div *ngIf="id.value !== 'new'" class="form-group">
+    <input formControlName="id" id="id" type="hidden" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label for="courseId">Course ID:</label
+    ><input
+      formControlName="courseId"
+      [placeholder]="!courseId.value && 'Enter course ID'"
+      id="courseId"
+      type="text"
+      class="form-control"
+    />
+    <small *ngIf="courseId.touched && courseId.invalid" class="text-error">
+      <span *ngIf="courseId.errors.required">Course ID required</span>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Course Name:</label
+    ><input
+      formControlName="name"
+      [placeholder]="!name.value && 'Enter course name'"
+      id="name"
+      type="text"
+      class="form-control"
+    />
+    <small *ngIf="name.touched && name.invalid" class="text-error">
+      <span *ngIf="name.errors.required">Course name required</span>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="ects">ECTS:</label
+    ><input
+      formControlName="ects"
+      [placeholder]="!ects.value && 'Enter ECTS'"
+      id="ects"
+      type="number"
+      class="form-control"
+    />
+    <small *ngIf="ects.touched && ects.invalid" class="text-error">
+      <span *ngIf="ects.errors.required">ECTS required</span>
+      <span *ngIf="ects.errors.min || ects.errors.max"
+        >ECTS should range between 1-25</span
+      >
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="lecturerToAdd">Lecturers:</label>
+    <input
+      formControlName="lecturerToAdd"
+      type="text"
+      id="lecturerToAdd"
+      (keyup.enter)="onAddLecturer(lecturerInput)"
+      placeholder="Add lecturer"
+      class="form-control"
+    />
+    <small
+      *ngIf="lecturerToAdd.touched && lecturerToAdd.invalid"
+      class="text-error"
+    >
+      <span *ngIf="lecturerToAdd.errors.lecturersCanNotBeEmpty"
+        >At least one lecturer required
+      </span>
+    </small>
+    <ul formArrayName="lecturers" class="list-group">
+      <li
+        *ngFor="let lecturer of lecturers.controls; let i = index"
+        (click)="onRemoveLecturer(lecturer)"
+        class="list-group-item"
+      >
+        <b>{{ lecturer.controls.name.value }}</b> -
+        <b>{{ lecturer.controls.role.value }}</b>
+      </li>
+    </ul>
+  </div>
+
+  <!-- <div class="form-group">
+    <label for="lecturer1">Add Lecturer: </label
+    ><select
+      multiple
+      data-live-search="true"
+      ngModel
+      name="course"
+      #course="ngModel"
+      id="course"
+      class="form-control"
+    >
+      <option value=""></option>
+      <option *ngFor="let course of courses" [value]="course.id">{{
+        course.name
+      }}</option>
+      Ili ako hocemo da posaljemo kompleksan objekat
+          <option *ngFor="let course of courses" [ngValue]="course">{{
+            course.name
+          }}</option>
+    </select>
+  </div> -->
+
+  <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
+    Save
+  </button>
+</form>
