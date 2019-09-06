@@ -14,6 +14,7 @@ import { UsernameValidators } from "../common/validation/username.validators";
   styleUrls: ["./register.component.css"]
 })
 export class RegisterComponent implements OnInit {
+  
   form = new FormGroup({
     // account: new FormGroup({
     //   username: new FormControl(),
@@ -73,13 +74,8 @@ export class RegisterComponent implements OnInit {
     // if (!isValid) {
     //   this.form.setErrors({ invalidLogin: true });
     // }
-    //Ako hocemo da validiraamo na submit
-    // Object.keys(this.form.controls).forEach(field => { // {1}
-    //   const control = this.form.get(field);            // {2}
-    //   control.markAsTouched({ onlySelf: true });       // {3}
-    // });
-    //i u tempalete-u iznad recimo submit dugmeta dodati div sa form.errors
-    //gdje ce se prikazati sve greske
+
+
   }
 
   ngOnInit() {}
