@@ -13,26 +13,29 @@ import {
   AbstractControl
 } from "@angular/forms";
 import { LecturersValidators } from "./../common/validation/lecturers.validators";
+import { CourseService } from "./../services/course.service";
+import { AppError } from "./../common/app-error";
+import { BadInput } from "./../common/bad-input";
 
 enum LecturerRole {
-  LECTURER = "Lecturer",
+  PROFESSOR = "Professor",
   ASSISTANT = "Assistant",
   DEMONSTRATOR = "Demonstrator"
 }
 
 const lecturers = [
-  { id: 1, name: "John", role: LecturerRole.LECTURER },
+  { id: 1, name: "John", role: LecturerRole.PROFESSOR },
   { id: 2, name: "Eric", role: LecturerRole.ASSISTANT },
   { id: 3, name: "Woo", role: LecturerRole.DEMONSTRATOR }
 ];
 
 let course = {
   id: "69",
-  courseId: "CS101",
+  naturalId: "CS101",
   name: "Computer Science 101",
   ects: "9",
   lecturers: [
-    { id: 1, name: "John", role: LecturerRole.LECTURER },
+    { id: 1, name: "John", role: LecturerRole.PROFESSOR },
     { id: 2, name: "Eric", role: LecturerRole.ASSISTANT },
     { id: 3, name: "Woo", role: LecturerRole.DEMONSTRATOR }
   ]
@@ -48,12 +51,13 @@ export class CourseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.form = formBuilder.group({
       id: ["", [], []],
-      courseId: ["", [Validators.required], []],
+      naturalId: ["", [Validators.required], []],
       name: ["", [Validators.required], []],
       ects: [
         "",
@@ -75,23 +79,18 @@ export class CourseComponent implements OnInit {
   get id() {
     return this.form.get("id");
   }
-
-  get courseId() {
-    return this.form.get("courseId");
+  get naturalId() {
+    return this.form.get("naturalId");
   }
-
   get name() {
     return this.form.get("name");
   }
-
   get ects() {
     return this.form.get("ects");
   }
-
   get lecturers() {
     return this.form.get("lecturers") as FormArray;
   }
-
   get lecturerToAdd() {
     return this.form.get("lecturerToAdd");
   }
@@ -113,12 +112,26 @@ export class CourseComponent implements OnInit {
     // this.router.navigate(["/courses"], {
     //   queryParams: { page: 1, orderBy: "name" }
     // });
-    const courseToAdd = this.form.value;
-    delete courseToAdd.lecturerToAdd;
-    alert(JSON.stringify(courseToAdd));
+    const course = this.form.value;
+    delete course.lecturerToAdd;
+    if (course.id === "new") {
+      delete course.id;
+      this.courseService.create(course).subscribe(
+        addedCourse => {
+          alert(addedCourse);
+          this.router.navigate(["/courses"]);
+        },
+        (error: AppError) => {
+          if (error instanceof BadInput) alert("Bad request");
+          else alert("Un unexpected error occured");
+        }
+      );
+    }
+    // alert(JSON.stringify(course));
   }
 
   ngOnInit() {
+    let id;
     //Da bismo se subscribovali na vise observable-a (npr i parametre rute i parametre query-ja)
     // Observable.combineLatest([this.route.paramMap, this.route.queryParamMap])
     //   .switchMap(combined => {
@@ -132,7 +145,7 @@ export class CourseComponent implements OnInit {
     //paramMap Property koji nam daje sve parametre rute
     this.route.paramMap.subscribe(params => {
       //+ ispred string konvertuje u broj ako je broj
-      // this.id.setValue(params.get("id"));
+      id = +params.get("id");
     });
 
     // this.form.patchValue(course);

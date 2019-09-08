@@ -18,10 +18,11 @@ import { ProfessorsComponent } from "./professors/professors.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
-import { PaymentComponent } from './payment/payment.component';
-import { CourseAttendanceComponent } from './course-attendance/course-attendance.component';
-import { CourseLecturingComponent } from './course-lecturing/course-lecturing.component';
-import { ExamComponent } from './exam/exam.component';
+import { PaymentComponent } from "./payment/payment.component";
+import { CourseAttendanceComponent } from "./course-attendance/course-attendance.component";
+import { CourseLecturingComponent } from "./course-lecturing/course-lecturing.component";
+import { ExamComponent } from "./exam/exam.component";
+import { CourseService } from "./services/course.service";
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -50,7 +51,7 @@ import { ExamComponent } from './exam/exam.component';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [StudentService],
+  providers: [StudentService, CourseService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

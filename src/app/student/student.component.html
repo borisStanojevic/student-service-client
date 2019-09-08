@@ -36,16 +36,16 @@
   </div>
 
   <div class="form-group">
-    <label for="studentId">Student ID:</label
+    <label for="naturalId">Student ID:</label
     ><input
-      formControlName="studentId"
-      [placeholder]="!studentId.value && 'Enter student ID'"
-      id="studentId"
+      formControlName="naturalId"
+      [placeholder]="!naturalId.value && 'Enter student ID'"
+      id="naturalId"
       type="text"
       class="form-control"
     />
-    <small *ngIf="studentId.touched && studentId.invalid" class="text-error">
-      <span *ngIf="studentId.errors.required">Student ID required</span>
+    <small *ngIf="naturalId.touched && naturalId.invalid" class="text-error">
+      <span *ngIf="naturalId.errors.required">Student ID required</span>
     </small>
   </div>
 

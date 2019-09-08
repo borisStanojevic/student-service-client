@@ -10,7 +10,7 @@ import {
 
 let student = {
   id: "69",
-  studentId: "SF82016",
+  naturalId: "SF82016",
   email: "m@g.com",
   firstName: "First",
   lastName: "Last",
@@ -25,7 +25,7 @@ let student = {
 })
 export class StudentComponent implements OnInit {
   private form: FormGroup;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class StudentComponent implements OnInit {
     this.form = this.formBuilder.group({
       //property: new FormControl("", [Validators.required], [])
       id: ["", [], []],
-      studentId: ["", [Validators.required], []],
+      naturalId: ["", [Validators.required], []],
       email: ["", [Validators.required], []],
       password: ["", [Validators.required], []],
       firstName: ["", [Validators.required], []],
@@ -52,8 +52,8 @@ export class StudentComponent implements OnInit {
   get id() {
     return this.form.get("id");
   }
-  get studentId() {
-    return this.form.get("studentId");
+  get naturalId() {
+    return this.form.get("naturalId");
   }
   get email() {
     return this.form.get("email");

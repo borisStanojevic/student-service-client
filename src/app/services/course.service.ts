@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { DataService } from "./data-service";
+import { Http } from "@angular/http";
 
 @Injectable()
-export class StudentService extends DataService {
+export class CourseService extends DataService {
   constructor(http: Http) {
     super("https://jsonplaceholder.typicode.com/users", http);
   }
