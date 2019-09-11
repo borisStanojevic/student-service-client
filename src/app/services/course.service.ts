@@ -5,6 +5,6 @@ import { Http } from "@angular/http";
 @Injectable()
 export class CourseService extends DataService {
   constructor(http: Http) {
-    super("https://jsonplaceholder.typicode.com/users", http);
+    super("localhost", http);
   }
 }

@@ -30,11 +30,11 @@ const routes: Routes = [
     component: StudentsComponent
   },
   {
-    path: "professors/:id",
+    path: "lecturers/:id",
     component: ProfessorComponent
   },
   {
-    path: "professors",
+    path: "lecturers",
     component: ProfessorsComponent
   },
   {
@@ -43,6 +43,14 @@ const routes: Routes = [
   },
   {
     path: "courses",
+    component: CoursesComponent
+  },
+  {
+    path: "lecturings",
+    component: CoursesComponent
+  },
+  {
+    path: "attendances",
     component: CoursesComponent
   },
   {

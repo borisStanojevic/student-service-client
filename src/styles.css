@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
-body {
+/* body {
   padding-top: 85px;
   padding-bottom: 55px;
   margin: 0 10% 0 10%;
@@ -10,6 +10,7 @@ nav {
   padding: 0 9% 0 4.5%;
   font-size: 1.15em;
 }
+*/
 
 form {
   width: 35%;
