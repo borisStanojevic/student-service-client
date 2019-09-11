@@ -5,6 +5,6 @@ import { Http } from "@angular/http";
 @Injectable()
 export class CourseService extends DataService {
   constructor(http: Http) {
-    super("localhost", http);
+    super("localhost:8080/courses", http);
   }
 }
