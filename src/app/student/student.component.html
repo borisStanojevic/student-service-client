@@ -4,32 +4,6 @@
   <p>
     {{ form.value | json }}
   </p>
-  <!-- <div class="form-group">
-    <label for="username">Username:</label
-    ><input
-      formControlName="username"
-      id="username"
-      type="text"
-      class="form-control"
-    />
-    <div *ngIf="username.pending">Checking username</div>
-    <div
-      *ngIf="username.touched && username.invalid"
-      class="alert alert-danger"
-    >
-      <div *ngIf="username.errors.required">Username required</div>
-      <div *ngIf="username.errors.minlength">
-        Username should be minimum
-        {{ username.errors.minlength.requiredLength }} characters
-      </div>
-      <div *ngIf="username.errors.cannotContainSpace">
-        Username can not contain space
-      </div>
-      <div *ngIf="username.errors.shouldBeUnique">
-        Username is already taken
-      </div>
-    </div>
-  </div> -->
 
   <div *ngIf="id.value !== 'new'" class="form-group">
     <input formControlName="id" id="id" type="hidden" class="form-control" />
@@ -46,6 +20,9 @@
     />
     <small *ngIf="naturalId.touched && naturalId.invalid" class="text-error">
       <span *ngIf="naturalId.errors.required">Student ID required</span>
+      <span *ngIf="naturalId.errors.pattern"
+        >Student id should be in format AA-00-00</span
+      >
     </small>
   </div>
 
@@ -76,6 +53,9 @@
       type="password"
       class="form-control"
     />
+    <small *ngIf="password.touched && password.invalid" class="text-error">
+      <span *ngIf="password.errors.required">Password required</span>
+    </small>
   </div>
 
   <div class="form-group">
@@ -128,7 +108,7 @@
     />
   </div>
 
-  <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
+  <button [disabled]="!form.valid" type="submit" class="btn btn-success">
     Save
   </button>
 </form>

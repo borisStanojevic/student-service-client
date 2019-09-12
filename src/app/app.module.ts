@@ -19,9 +19,6 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { PaymentComponent } from "./payment/payment.component";
-import { CourseAttendanceComponent } from "./course-attendance/course-attendance.component";
-import { CourseLecturingComponent } from "./course-lecturing/course-lecturing.component";
-import { ExamComponent } from "./exam/exam.component";
 import { CourseService } from "./services/course.service";
 import { ProfessorService } from "./professor.service";
 
@@ -40,10 +37,7 @@ import { ProfessorService } from "./professor.service";
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    PaymentComponent,
-    CourseAttendanceComponent,
-    CourseLecturingComponent,
-    ExamComponent
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

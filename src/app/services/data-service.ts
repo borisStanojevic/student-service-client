@@ -47,9 +47,9 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  delete(id: number) {
+  delete(resource: any) {
     return this.http
-      .delete(`${this.url}/${id}`)
+      .delete(`${this.url}/${resource.id}`)
       .map(response => response.json())
       .catch(this.handleError);
   }

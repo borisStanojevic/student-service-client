@@ -20,6 +20,9 @@
     />
     <small *ngIf="naturalId.touched && naturalId.invalid" class="text-error">
       <span *ngIf="naturalId.errors.required">Course ID required</span>
+      <span *ngIf="naturalId.errors.pattern"
+        >Course ID should be 3-6 characters digits/letters
+      </span>
     </small>
   </div>
 
@@ -53,6 +56,8 @@
       >
     </small>
   </div>
+
+  <hr />
 
   <div class="form-group">
     <label for="lecturerToAdd">Lecturers:</label>

@@ -57,23 +57,21 @@ export class CourseComponent implements OnInit {
   ) {
     this.form = formBuilder.group({
       id: ["", [], []],
-      naturalId: ["", [Validators.required], []],
+      naturalId: [
+        "",
+        [Validators.required, Validators.pattern("^[A-Z0-9]{3,6}$")],
+        []
+      ],
       name: ["", [Validators.required], []],
       ects: [
         "",
         [Validators.required, Validators.min(1), Validators.max(25)],
         []
       ],
-      lecturers: formBuilder.array([], Validators.required),
+      lecturers: formBuilder.array([]),
 
       lecturerToAdd: ["", [], []]
     });
-    //lecturersCanNotBeEmpty
-    // const lecturersCanNotBeEmpty = (control: AbstractControl) => {
-    //   if (this.lecturers.length === 0) return { lecturersCanNotBeEmpty: true };
-    // };
-    // this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
-    // this.lecturerToAdd.updateValueAndValidity();
   }
 
   get id() {
@@ -114,15 +112,12 @@ export class CourseComponent implements OnInit {
     // });
     const course = this.form.value;
     delete course.lecturerToAdd;
-    course.lecturers = [{ id: 1 }, { id: 2 }];
 
     if (course.id === "") {
       delete course.id;
-      course.lecturers = [1, 2];
 
       this.courseService.create(course).subscribe(
         addedCourse => {
-          alert(addedCourse);
           this.router.navigate(["/courses"]);
         },
         (error: AppError) => {
@@ -150,8 +145,18 @@ export class CourseComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       //+ ispred string konvertuje u broj ako je broj
       id = params.get("id");
-      alert(id);
     });
+
+    if (id !== "new") {
+      const lecturersCanNotBeEmpty = (control: AbstractControl) => {
+        if (this.lecturers.length === 0)
+          return { lecturersCanNotBeEmpty: true };
+      };
+      this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
+      this.lecturers.setValidators(Validators.required);
+      this.lecturerToAdd.updateValueAndValidity();
+      this.lecturers.updateValueAndValidity();
+    }
 
     if (id !== "new") {
       this.courseService

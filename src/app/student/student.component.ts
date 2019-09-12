@@ -7,6 +7,9 @@ import {
   FormControl,
   Validators
 } from "@angular/forms";
+import { StudentService } from "../services/student.service";
+import { AppError } from "../common/app-error";
+import { BadInput } from "./../common/bad-input";
 
 let student = {
   id: "69",
@@ -28,13 +31,21 @@ export class StudentComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private studentService: StudentService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.form = this.formBuilder.group({
       //property: new FormControl("", [Validators.required], [])
       id: ["", [], []],
-      naturalId: ["", [Validators.required], []],
+      naturalId: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("[a-zA-Z]{2}-[\\d]{2}-[\\d]{2}")
+        ],
+        []
+      ],
       email: ["", [Validators.required], []],
       password: ["", [Validators.required], []],
       firstName: ["", [Validators.required], []],
@@ -42,11 +53,6 @@ export class StudentComponent implements OnInit {
       address: ["", [], []],
       phoneNumber: ["", [], []]
     });
-
-    if (this.id.value !== "new") {
-      this.password.clearValidators();
-      this.password.updateValueAndValidity();
-    }
   }
 
   get id() {
@@ -75,7 +81,6 @@ export class StudentComponent implements OnInit {
   }
 
   onSave() {
-    alert(JSON.stringify(this.form.value));
     //Ako hocemo da validiraamo na submit
     // Object.keys(this.form.controls).forEach(field => { // {1}
     //   const control = this.form.get(field);            // {2}
@@ -83,14 +88,47 @@ export class StudentComponent implements OnInit {
     // });
     //i u tempalete-u iznad recimo submit dugmeta dodati div sa form.errors
     //gdje ce se prikazati sve greske
+
+    // const student = delete student.lecturerToAdd;
+    // course.lecturers = [{ id: 1 }, { id: 2 }];
+
+    const student = this.form.value;
+    if (student.address) student.address = null;
+    if (student.phoneNumber) student.phoneNumber = null;
+    if (student.id === "new") {
+      delete student.id;
+
+      this.studentService.create(student).subscribe(
+        addedStudent => {
+          this.router.navigate(["/students"]);
+        },
+        (error: AppError) => {
+          if (error instanceof BadInput) alert("Bad request");
+          else alert("Un unexpected error occured");
+        }
+      );
+    }
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      // student.id = params.get("id");
       this.id.setValue(params.get("id"));
     });
 
-    // this.form.patchValue(student);
+    if (this.id.value !== "new") {
+      this.password.clearValidators();
+      this.password.updateValueAndValidity();
+    }
+
+    const id = this.id.value;
+
+    if (id !== "new") {
+      this.studentService
+        .getById(id)
+        .subscribe(
+          student => this.form.patchValue(student),
+          (error: AppError) => alert(JSON.stringify(error))
+        );
+    }
   }
 }
