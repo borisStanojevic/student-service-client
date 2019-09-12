@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
+import { Http, RequestOptions, Headers } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { AppError } from "./../common/app-error";
 import { NotFoundError } from "../common/not-found-error";
@@ -12,11 +12,16 @@ import { Forbidden } from "../common/forbidden";
 
 @Injectable()
 export class DataService {
-  constructor(private url: string, protected http: Http) {}
+  private httpOptions;
+  constructor(private url: string, protected http: Http) {
+    this.httpOptions = {
+      headers: new Headers({ "Content-Type": "application/json" })
+    };
+  }
 
   create(resource: any) {
     return this.http
-      .post(this.url, JSON.stringify(resource))
+      .post(this.url, JSON.stringify(resource), this.httpOptions)
       .map(response => response.json())
       .catch(this.handleError);
   }
@@ -24,6 +29,13 @@ export class DataService {
   getAll() {
     return this.http
       .get(this.url)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
+
+  getById(id: number) {
+    return this.http
+      .get(this.url + `/${id}`, this.httpOptions)
       .map(response => response.json())
       .catch(this.handleError);
   }

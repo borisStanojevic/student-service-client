@@ -1,3 +1,43 @@
+<a routerLink="/lecturers/new" class="btn btn-primary">New Lecturer</a>
+
 <h2>Lecturers</h2>
 
-<a routerLink="/lecturers/new" class="btn btn-primary">New Lecturer</a>
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Role</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let lecturer of lecturers; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <a [routerLink]="'/lecturers/' + lecturer.id" class="btn btn-link"
+          >{{ lecturer.firstName }} {{ lecturer.lastName }}</a
+        >
+      </td>
+      <td>{{ lecturer.email }}</td>
+      <td>{{ lecturer.address ? "lecturer.address" : "-" }}</td>
+      <td>{{ lecturer.phoneNumber ? "lecturer.phoneNumber" : "-" }}</td>
+      <td>
+        {{ lecturer.role.charAt(0) + lecturer.role.toLowerCase().slice(1) }}
+      </td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDeleteLecturer(lecturer)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

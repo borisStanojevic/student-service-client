@@ -1,8 +1,44 @@
-<p>
-  Students
-</p>
+<a routerLink="/students/new" class="btn btn-primary">New Student</a>
 
+<h2>Students</h2>
 
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">Student ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Phone</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let student of students; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ student.naturalId }}</td>
+      <td>
+        <a [routerLink]="'/students/' + student.id" class="btn btn-link"
+          >{{ student.firstName }} {{ student.lastName }}</a
+        >
+      </td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.address ? "student.address" : "-" }}</td>
+      <td>{{ student.phoneNumber ? "student.phoneNumber" : "-" }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDeleteStudent(student)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- <label>Student name:</label>
 <input (input)="onUpdateStudentName($event)" type="text" /> -->
@@ -43,11 +79,3 @@
 <app-student></app-student>
 
 <app-student *ngFor="let student of students"></app-student> -->
-
-<ul class="list-group">
-  <li *ngFor="let student of students; index as i" class="list-group-item">
-    <button (click)="onUpdateStudent(student)">Update</button>
-    {{ i }}) {{ student.name }}
-    <button (click)="onDeleteStudent(student)">Delete</button>
-  </li>
-</ul>

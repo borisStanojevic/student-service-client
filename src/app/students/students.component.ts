@@ -11,7 +11,7 @@ import { BadInput } from "./../common/bad-input";
 })
 export class StudentsComponent implements OnInit {
   allowAdding: boolean = true;
-  students: object[] = [];
+  private students: any[] = [];
 
   constructor(private studentService: StudentService) {}
 
@@ -20,7 +20,7 @@ export class StudentsComponent implements OnInit {
       .getAll()
       .subscribe(
         students => (this.students = students),
-        (error: AppError) => alert("An unexpected error occured")
+        (error: AppError) => alert(JSON.stringify(error))
       );
   }
 

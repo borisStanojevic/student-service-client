@@ -69,11 +69,11 @@ export class CourseComponent implements OnInit {
       lecturerToAdd: ["", [], []]
     });
     //lecturersCanNotBeEmpty
-    const lecturersCanNotBeEmpty = (control: AbstractControl) => {
-      if (this.lecturers.length === 0) return { lecturersCanNotBeEmpty: true };
-    };
-    this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
-    this.lecturerToAdd.updateValueAndValidity();
+    // const lecturersCanNotBeEmpty = (control: AbstractControl) => {
+    //   if (this.lecturers.length === 0) return { lecturersCanNotBeEmpty: true };
+    // };
+    // this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
+    // this.lecturerToAdd.updateValueAndValidity();
   }
 
   get id() {
@@ -114,8 +114,12 @@ export class CourseComponent implements OnInit {
     // });
     const course = this.form.value;
     delete course.lecturerToAdd;
-    if (course.id === "new") {
+    course.lecturers = [{ id: 1 }, { id: 2 }];
+
+    if (course.id === "") {
       delete course.id;
+      course.lecturers = [1, 2];
+
       this.courseService.create(course).subscribe(
         addedCourse => {
           alert(addedCourse);
@@ -145,9 +149,18 @@ export class CourseComponent implements OnInit {
     //paramMap Property koji nam daje sve parametre rute
     this.route.paramMap.subscribe(params => {
       //+ ispred string konvertuje u broj ako je broj
-      id = +params.get("id");
+      id = params.get("id");
+      alert(id);
     });
 
+    if (id !== "new") {
+      this.courseService
+        .getById(id)
+        .subscribe(
+          course => this.form.patchValue(course),
+          (error: AppError) => console.log(JSON.stringify(error))
+        );
+    }
     // this.form.patchValue(course);
   }
 }

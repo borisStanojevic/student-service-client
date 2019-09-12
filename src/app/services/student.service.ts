@@ -5,6 +5,6 @@ import { DataService } from "./data-service";
 @Injectable()
 export class StudentService extends DataService {
   constructor(http: Http) {
-    super("https://jsonplaceholder.typicode.com/users", http);
+    super("http://localhost:8080/students", http);
   }
 }
