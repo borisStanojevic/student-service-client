@@ -12,6 +12,7 @@ import { StudentService } from "../services/student.service";
 import { AppError } from "../common/app-error";
 import { BadInput } from "./../common/bad-input";
 import { CourseService } from "./../services/course.service";
+import { CourseLecturingService } from "./../course-lecturing.service";
 
 let student = {
   id: "69",
@@ -35,7 +36,7 @@ export class StudentComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private studentService: StudentService,
-    private courseService: CourseService,
+    private courseLecturingService: CourseLecturingService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -95,6 +96,36 @@ export class StudentComponent implements OnInit {
     return this.form.get("courseToAdd");
   }
 
+  onAddCourse() {
+    const courseLecturing = this.allCourses.find(
+      course => course.course.naturalId === this.courseToAdd.value
+    );
+    const { id: courseLecturingId } = courseLecturing;
+    const {
+      naturalId: courseNaturalId,
+      name: courseName
+    } = courseLecturing.course;
+    const {
+      firstName: lecturerFirstName,
+      lastName: lecturerLastName
+    } = courseLecturing.lecturer;
+    this.courses.push(
+      this.formBuilder.group({
+        courseLecturingId,
+        courseNaturalId,
+        courseName,
+        lecturerFirstName,
+        lecturerLastName
+      })
+    );
+    this.courseToAdd.setValue("");
+  }
+
+  onRemoveCourse(course: FormControl) {
+    const index = this.courses.controls.indexOf(course);
+    this.courses.removeAt(index);
+  }
+
   onSave() {
     //Ako hocemo da validiraamo na submit
     // Object.keys(this.form.controls).forEach(field => { // {1}
@@ -108,8 +139,19 @@ export class StudentComponent implements OnInit {
     // course.lecturers = [{ id: 1 }, { id: 2 }];
 
     const student = this.form.value;
-    if (student.address) student.address = null;
-    if (student.phoneNumber) student.phoneNumber = null;
+    delete student.courseToAdd;
+
+    if (!student.address) student.address = null;
+    if (!student.phoneNumber) student.phoneNumber = null;
+
+    const courseLecturingIds = student.courses.map(
+      course => course.courseLecturingId
+    );
+    delete student.courses;
+    student.courseLecturingIds = courseLecturingIds;
+
+    alert(JSON.stringify(student));
+
     if (student.id === "new") {
       delete student.id;
 
@@ -118,8 +160,7 @@ export class StudentComponent implements OnInit {
           this.router.navigate(["/students"]);
         },
         (error: AppError) => {
-          if (error instanceof BadInput) alert("Bad request");
-          else alert("Un unexpected error occured");
+          alert(JSON.stringify(error));
         }
       );
     }
@@ -130,7 +171,7 @@ export class StudentComponent implements OnInit {
       this.id.setValue(params.get("id"));
     });
 
-    this.courseService
+    this.courseLecturingService
       .getAll()
       .subscribe(
         courses => (this.allCourses = courses),
@@ -155,16 +196,22 @@ export class StudentComponent implements OnInit {
       this.studentService.getCoursesAttending(id).subscribe(courses => {
         courses.map(
           course => {
-            console.log(course);
-            const { id, name, naturalId } = course.course;
-            const { firstName, lastName } = course.lecturer;
+            const { id: courseLecturingId } = course;
+            const {
+              naturalId: courseNaturalId,
+              name: courseName
+            } = course.course;
+            const {
+              firstName: lecturerFirstName,
+              lastName: lecturerLastName
+            } = course.lecturer;
             this.courses.push(
               this.formBuilder.group({
-                id,
-                name,
-                naturalId,
-                firstName,
-                lastName
+                courseLecturingId,
+                courseNaturalId,
+                courseName,
+                lecturerFirstName,
+                lecturerLastName
               })
             );
           },

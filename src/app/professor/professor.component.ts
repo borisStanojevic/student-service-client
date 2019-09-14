@@ -102,8 +102,8 @@ export class ProfessorComponent implements OnInit {
     delete lecturer.courseToAdd;
     alert(JSON.stringify(lecturer));
 
-    if (lecturer.address) lecturer.address = null;
-    if (lecturer.phoneNumber) lecturer.phoneNumber = null;
+    if (!lecturer.address) lecturer.address = null;
+    if (!lecturer.phoneNumber) lecturer.phoneNumber = null;
     lecturer.lecturerRole = lecturer.lecturerRole.toUpperCase();
     lecturer.courses = lecturer.courses.map(course => course.id);
 

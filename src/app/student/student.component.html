@@ -5,7 +5,7 @@
     {{ form.value | json }}
   </p>
 
-  <p>SVI KURSEVI</p>
+  <p>SVA PREDAVANJA KURSEVA</p>
   <p>{{ this.allCourses | json }}</p>
 
   <div *ngIf="id.value !== 'new'" class="form-group">
@@ -117,7 +117,7 @@
       formControlName="courseToAdd"
       type="text"
       id="courseToAdd"
-      (keyup.enter)="onAddCourse(courseInput)"
+      (keyup.enter)="onAddCourse()"
       placeholder="Add course that the student is attending"
       class="form-control"
     />
@@ -132,12 +132,12 @@
         (click)="onRemoveCourse(course)"
         class="list-group-item"
       >
-        <b>{{ course.controls.naturalId.value }}</b> -
-        <b>{{ course.controls.name.value }}</b>
+        <b>{{ course.controls.courseNaturalId.value }}</b> -
+        <b>{{ course.controls.courseName.value }}</b>
 
         <span class="lecturer-span">
-          {{ course.controls.firstName.value }}
-          {{ course.controls.lastName.value }}</span
+          {{ course.controls.lecturerFirstName.value }}
+          {{ course.controls.lecturerLastName.value }}</span
         >
       </li>
     </ul>

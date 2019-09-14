@@ -21,6 +21,7 @@ import { RegisterComponent } from "./register/register.component";
 import { PaymentComponent } from "./payment/payment.component";
 import { CourseService } from "./services/course.service";
 import { ProfessorService } from "./professor.service";
+import { CourseLecturingService } from "./course-lecturing.service";
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -46,7 +47,12 @@ import { ProfessorService } from "./professor.service";
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [StudentService, ProfessorService, CourseService],
+  providers: [
+    StudentService,
+    ProfessorService,
+    CourseService,
+    CourseLecturingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
