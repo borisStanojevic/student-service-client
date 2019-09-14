@@ -7,6 +7,9 @@ import {
   FormArray,
   FormControl
 } from "@angular/forms";
+import { ProfessorService } from "../professor.service";
+import { CourseService } from "../services/course.service";
+import { AppError } from "../common/app-error";
 
 enum Role {
   PROFESSOR = "Professor",
@@ -14,36 +17,19 @@ enum Role {
   DEMONSTRATOR = "Demonstrator"
 }
 
-const courses = [
-  { id: 1, naturalId: "CS101", name: "Computer Science 101" },
-  { id: 2, naturalId: "CS50", name: "Introduction to Computer Science" },
-  { id: 3, naturalId: "EE64", name: "Electrical Engineering And Circuits" }
-];
-
-const lecturer = {
-  id: "",
-  firstName: "Valentin",
-  lastName: "Penca",
-  email: "vp@ftn.ns",
-  role: Role.ASSISTANT,
-  courses: [
-    { id: 3, naturalId: "EE64", name: "Electrical Engineering And Circuits" }
-  ]
-};
-
 @Component({
   selector: "app-professor",
   templateUrl: "./professor.component.html",
   styleUrls: ["./professor.component.css"]
 })
 export class ProfessorComponent implements OnInit {
+  private allCourses: any[] = [];
   private form: FormGroup;
-  getRoles(): string[] {
-    return Object.keys(Role).map(key => Role[key as string]);
-  }
 
   constructor(
     private formBuilder: FormBuilder,
+    private lecturerService: ProfessorService,
+    private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -52,12 +38,19 @@ export class ProfessorComponent implements OnInit {
       firstName: ["", [Validators.required], []],
       lastName: ["", [Validators.required], []],
       email: ["", [Validators.required], []],
+      password: ["", [Validators.required], []],
+      lecturerRole: [Role.PROFESSOR, Validators.required, []],
       phoneNumber: ["", [], []],
-      role: [Role.PROFESSOR, Validators.required, []],
+      address: ["", [], []],
+
       courses: formBuilder.array([]),
 
       courseToAdd: ["", [], []]
     });
+  }
+
+  getRoles(): string[] {
+    return Object.keys(Role).map(key => Role[key as string]);
   }
 
   get id() {
@@ -72,11 +65,17 @@ export class ProfessorComponent implements OnInit {
   get email() {
     return this.form.get("email");
   }
+  get password() {
+    return this.form.get("password");
+  }
   get phoneNumber() {
     return this.form.get("phoneNumber");
   }
-  get role() {
-    return this.form.get("role");
+  get address() {
+    return this.form.get("address");
+  }
+  get lecturerRole() {
+    return this.form.get("lecturerRole");
   }
   get courses() {
     return this.form.get("courses") as FormArray;
@@ -86,8 +85,8 @@ export class ProfessorComponent implements OnInit {
   }
 
   onAddCourse() {
-    const { id, naturalId, name } = courses.find(
-      course => course.name === this.courseToAdd.value
+    const { id, naturalId, name } = this.allCourses.find(
+      course => course.naturalId === this.courseToAdd.value
     );
     this.courses.push(this.formBuilder.group({ id, naturalId, name }));
     this.courseToAdd.setValue("");
@@ -99,21 +98,64 @@ export class ProfessorComponent implements OnInit {
   }
 
   onSave() {
-    const professor = this.form.value;
-    delete professor.courseToAdd;
-    alert(JSON.stringify(professor));
+    const lecturer = this.form.value;
+    delete lecturer.courseToAdd;
+    alert(JSON.stringify(lecturer));
+
+    if (lecturer.address) lecturer.address = null;
+    if (lecturer.phoneNumber) lecturer.phoneNumber = null;
+    lecturer.lecturerRole = lecturer.lecturerRole.toUpperCase();
+    lecturer.courses = lecturer.courses.map(course => course.id);
+
+    if (lecturer.id === "new") {
+      delete lecturer.id;
+
+      this.lecturerService.create(lecturer).subscribe(
+        addedLecturer => {
+          this.router.navigate(["/lecturers"]);
+        },
+        (error: AppError) => {
+          alert(JSON.stringify(error));
+        }
+      );
+    }
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.id.setValue(+params.get("id"));
+      this.id.setValue(params.get("id"));
     });
-    this.courses.push(
-      this.formBuilder.group(
-        lecturer.courses.map(course => this.formBuilder.group({ course }))
-      )
-    );
 
-    this.form.patchValue(lecturer);
+    this.courseService
+      .getAll()
+      .subscribe(
+        courses => (this.allCourses = courses),
+        (error: AppError) => alert(JSON.stringify(error))
+      );
+
+    const id = this.id.value;
+
+    if (this.id.value !== "new") {
+      this.password.clearValidators();
+      this.password.updateValueAndValidity();
+    }
+
+    if (id !== "new") {
+      this.lecturerService
+        .getById(id)
+        .subscribe(
+          lecturer => this.form.patchValue(lecturer),
+          (error: AppError) => alert(JSON.stringify(error))
+        );
+
+      this.lecturerService.getCoursesLecturing(id).subscribe(courses => {
+        courses.map(
+          course => {
+            this.courses.push(this.formBuilder.group(course));
+          },
+          (error: AppError) => alert(JSON.stringify(error))
+        );
+      });
+    }
   }
 }

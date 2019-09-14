@@ -5,6 +5,9 @@
     {{ form.value | json }}
   </p>
 
+  <p>SVI KURSEVI</p>
+  <p>{{ this.allCourses | json }}</p>
+
   <div *ngIf="id.value !== 'new'" class="form-group">
     <input formControlName="id" id="id" type="hidden" class="form-control" />
   </div>
@@ -106,6 +109,38 @@
       type="text"
       class="form-control"
     />
+  </div>
+
+  <div class="form-group">
+    <label for="courseToAdd">Courses Attending:</label>
+    <input
+      formControlName="courseToAdd"
+      type="text"
+      id="courseToAdd"
+      (keyup.enter)="onAddCourse(courseInput)"
+      placeholder="Add course that the student is attending"
+      class="form-control"
+    />
+    <small
+      *ngIf="courseToAdd.touched && courseToAdd.invalid"
+      class="text-error"
+    >
+    </small>
+    <ul formArrayName="courses" class="list-group">
+      <li
+        *ngFor="let course of courses.controls; let i = index"
+        (click)="onRemoveCourse(course)"
+        class="list-group-item"
+      >
+        <b>{{ course.controls.naturalId.value }}</b> -
+        <b>{{ course.controls.name.value }}</b>
+
+        <span class="lecturer-span">
+          {{ course.controls.firstName.value }}
+          {{ course.controls.lastName.value }}</span
+        >
+      </li>
+    </ul>
   </div>
 
   <button [disabled]="!form.valid" type="submit" class="btn btn-success">

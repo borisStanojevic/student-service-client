@@ -11,7 +11,6 @@ import { ProfessorsComponent } from "./professors/professors.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 
-//Od specificnih ka opstim
 const routes: Routes = [
   {
     path: "auth/login",
@@ -43,14 +42,6 @@ const routes: Routes = [
   },
   {
     path: "courses",
-    component: CoursesComponent
-  },
-  {
-    path: "lecturings",
-    component: CoursesComponent
-  },
-  {
-    path: "attendances",
     component: CoursesComponent
   },
   {

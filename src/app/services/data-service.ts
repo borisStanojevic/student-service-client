@@ -12,8 +12,8 @@ import { Forbidden } from "../common/forbidden";
 
 @Injectable()
 export class DataService {
-  private httpOptions;
-  constructor(private url: string, protected http: Http) {
+  protected httpOptions;
+  constructor(protected url: string, protected http: Http) {
     this.httpOptions = {
       headers: new Headers({ "Content-Type": "application/json" })
     };
@@ -54,7 +54,7 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  private handleError(error: Response) {
+  protected handleError(error: Response) {
     if (error.status === 400)
       return Observable.throw(new BadInput(error.json()));
     else if (error.status === 401)

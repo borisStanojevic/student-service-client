@@ -5,11 +5,13 @@ import {
   Form,
   FormGroup,
   FormControl,
-  Validators
+  Validators,
+  FormArray
 } from "@angular/forms";
 import { StudentService } from "../services/student.service";
 import { AppError } from "../common/app-error";
 import { BadInput } from "./../common/bad-input";
+import { CourseService } from "./../services/course.service";
 
 let student = {
   id: "69",
@@ -27,11 +29,13 @@ let student = {
   styleUrls: ["./student.component.css"]
 })
 export class StudentComponent implements OnInit {
+  private allCourses: any[] = [];
   private form: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private studentService: StudentService,
+    private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -51,7 +55,11 @@ export class StudentComponent implements OnInit {
       firstName: ["", [Validators.required], []],
       lastName: ["", [Validators.required], []],
       address: ["", [], []],
-      phoneNumber: ["", [], []]
+      phoneNumber: ["", [], []],
+
+      courses: formBuilder.array([]),
+
+      courseToAdd: ["", [], []]
     });
   }
 
@@ -78,6 +86,13 @@ export class StudentComponent implements OnInit {
   }
   get phoneNumber() {
     return this.form.get("phoneNumber");
+  }
+
+  get courses() {
+    return this.form.get("courses") as FormArray;
+  }
+  get courseToAdd() {
+    return this.form.get("courseToAdd");
   }
 
   onSave() {
@@ -115,12 +130,19 @@ export class StudentComponent implements OnInit {
       this.id.setValue(params.get("id"));
     });
 
+    this.courseService
+      .getAll()
+      .subscribe(
+        courses => (this.allCourses = courses),
+        (error: AppError) => alert(JSON.stringify(error))
+      );
+
+    const id = this.id.value;
+
     if (this.id.value !== "new") {
       this.password.clearValidators();
       this.password.updateValueAndValidity();
     }
-
-    const id = this.id.value;
 
     if (id !== "new") {
       this.studentService
@@ -129,6 +151,26 @@ export class StudentComponent implements OnInit {
           student => this.form.patchValue(student),
           (error: AppError) => alert(JSON.stringify(error))
         );
+
+      this.studentService.getCoursesAttending(id).subscribe(courses => {
+        courses.map(
+          course => {
+            console.log(course);
+            const { id, name, naturalId } = course.course;
+            const { firstName, lastName } = course.lecturer;
+            this.courses.push(
+              this.formBuilder.group({
+                id,
+                name,
+                naturalId,
+                firstName,
+                lastName
+              })
+            );
+          },
+          (error: AppError) => alert(JSON.stringify(error))
+        );
+      });
     }
   }
 }
