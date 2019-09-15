@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ProfessorService } from "./../professor.service";
+import { ProfessorService } from "../services/professor.service";
 import { AppError } from "../common/app-error";
 import { NotFoundError } from "../common/not-found-error";
 

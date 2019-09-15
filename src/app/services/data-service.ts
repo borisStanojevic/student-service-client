@@ -12,7 +12,8 @@ import { Forbidden } from "../common/forbidden";
 
 @Injectable()
 export class DataService {
-  protected httpOptions;
+  protected httpOptions: any;
+
   constructor(protected url: string, protected http: Http) {
     this.httpOptions = {
       headers: new Headers({ "Content-Type": "application/json" })

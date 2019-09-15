@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CourseLecturingService } from './course-lecturing.service';
+import { CourseLecturingService } from './services/course-lecturing.service';
 
 describe('CourseLecturingService', () => {
   beforeEach(() => {

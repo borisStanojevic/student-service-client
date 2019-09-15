@@ -1,76 +1,39 @@
 <h2>Login</h2>
 
-<form #loginForm="ngForm" (ngSubmit)="submit(loginForm)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p>
+    {{ form.value | json }}
+  </p>
+
   <div class="form-group">
-    <label for="username">Username:</label
+    <label for="email">Email:</label
     ><input
-      ngModel
-      name="username"
-      #username="ngModel"
-      id="username"
-      type="text"
+      formControlName="email"
+      placeholder="Enter email"
+      id="email"
+      type="email"
       class="form-control"
-      required
-      minlength="6"
-      maxlength="31"
-      pattern="mitar123"
     />
-    <div *ngIf="username.touched && !username.valid" class="alert alert-danger">
-      <div *ngIf="username.errors.required">Username is required</div>
-      <div *ngIf="username.errors.minlength">
-        Username should be minimum
-        {{ username.errors.minlength.requiredLength }} characters
-      </div>
-      <div *ngIf="username.errors.pattern">
-        Username doesn't match the "mitar123" pattern
-      </div>
-    </div>
+    <small *ngIf="email.touched && email.invalid" class="text-error">
+      <span *ngIf="email.errors.required">Email required</span>
+    </small>
   </div>
 
   <div class="form-group">
-    <label for="password">Password:</label
+    <label for="password">Password</label
     ><input
-      ngModel
-      name="password"
-      #password="ngModel"
+      formControlName="password"
+      placeholder="Enter password"
       id="password"
       type="password"
       class="form-control"
-      required
     />
+    <small *ngIf="password.touched && password.invalid" class="text-error">
+      <span *ngIf="password.errors.required">Password required</span>
+    </small>
   </div>
 
-  <div class="checkbox">
-    <label
-      ><input ngModel name="remember" type="checkbox" />Remember me ?
-    </label>
-  </div>
-
-  <div class="form-group">
-    <label for="course">Subscribe to course: </label
-    ><select
-      ngModel
-      name="course"
-      #course="ngModel"
-      id="course"
-      class="form-control"
-    >
-      <option value=""></option>
-      <option *ngFor="let course of courses" [value]="course.id">{{
-        course.name
-      }}</option>
-      <!-- Ili ako hocemo da posaljemo kompleksan objekat
-      <option *ngFor="let course of courses" [ngValue]="course">{{
-        course.name
-      }}</option> -->
-    </select>
-  </div>
-
-  <p>
-    {{ loginForm.value | json }}
-  </p>
-
-  <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary">
+  <button [disabled]="!form.valid" type="submit" class="btn btn-primary">
     Login
   </button>
 </form>

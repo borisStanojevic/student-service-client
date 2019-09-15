@@ -20,8 +20,9 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { PaymentComponent } from "./payment/payment.component";
 import { CourseService } from "./services/course.service";
-import { ProfessorService } from "./professor.service";
-import { CourseLecturingService } from "./course-lecturing.service";
+import { ProfessorService } from "./services/professor.service";
+import { CourseLecturingService } from "./services/course-lecturing.service";
+import { AuthService } from "./services/auth.service";  
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -51,7 +52,8 @@ import { CourseLecturingService } from "./course-lecturing.service";
     StudentService,
     ProfessorService,
     CourseService,
-    CourseLecturingService
+    CourseLecturingService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -12,7 +12,7 @@ import { StudentService } from "../services/student.service";
 import { AppError } from "../common/app-error";
 import { BadInput } from "./../common/bad-input";
 import { CourseService } from "./../services/course.service";
-import { CourseLecturingService } from "./../course-lecturing.service";
+import { CourseLecturingService } from "../services/course-lecturing.service";
 
 let student = {
   id: "69",
@@ -41,7 +41,6 @@ export class StudentComponent implements OnInit {
     private router: Router
   ) {
     this.form = this.formBuilder.group({
-      //property: new FormControl("", [Validators.required], [])
       id: ["", [], []],
       naturalId: [
         "",

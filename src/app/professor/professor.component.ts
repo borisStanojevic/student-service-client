@@ -7,7 +7,7 @@ import {
   FormArray,
   FormControl
 } from "@angular/forms";
-import { ProfessorService } from "../professor.service";
+import { ProfessorService } from "../services/professor.service";
 import { CourseService } from "../services/course.service";
 import { AppError } from "../common/app-error";
 
