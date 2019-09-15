@@ -30,3 +30,8 @@ export function setAuthenticatedUser(token) {
   localStorage.setItem("firstName", firstName);
   localStorage.setItem("lastName", lastName);
 }
+
+export function unauthenticateUser() {
+  localStorage.clear();
+  window.location.replace("/auth/login");
+}

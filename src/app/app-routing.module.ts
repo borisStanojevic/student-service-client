@@ -10,6 +10,9 @@ import { ProfessorComponent } from "./professor/professor.component";
 import { ProfessorsComponent } from "./professors/professors.component";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
+import { StudentCoursesComponent } from "./student-courses/student-courses.component";
+import { LecturerCoursesComponent } from "./lecturer-courses/lecturer-courses.component";
+import { StudentTransactionsComponent } from "./student-transactions/student-transactions.component";
 
 const routes: Routes = [
   {
@@ -17,8 +20,21 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: "auth/logout",
+    component: LoginComponent
+  },
+
+  {
     path: "auth/register",
     component: RegisterComponent
+  },
+  {
+    path: "students/me/courses",
+    component: StudentCoursesComponent
+  },
+  {
+    path: "students/me/transactions",
+    component: StudentTransactionsComponent
   },
   {
     path: "students/:id",
@@ -27,6 +43,10 @@ const routes: Routes = [
   {
     path: "students",
     component: StudentsComponent
+  },
+  {
+    path: "lecturers/me/courses",
+    component: LecturerCoursesComponent
   },
   {
     path: "lecturers/:id",

@@ -9,6 +9,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/observable/throw";
 import { Unauthenticated } from "../common/unauthenticated";
 import { Forbidden } from "../common/forbidden";
+import { Conflict } from "./../common/conflict";
 
 @Injectable()
 export class DataService {
@@ -62,6 +63,7 @@ export class DataService {
       return Observable.throw(new Unauthenticated());
     else if (error.status === 403) return Observable.throw(new Forbidden());
     else if (error.status === 404) return Observable.throw(new NotFoundError());
+    else if (error.status === 409) return Observable.throw(new Conflict());
     else return Observable.throw(new AppError(error));
   }
 }

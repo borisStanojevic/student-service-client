@@ -1,4 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import {
+  getAuthenticatedUser,
+  unauthenticateUser
+} from "../common/util/auth-util";
 
 @Component({
   selector: "app-navbar",
@@ -6,7 +10,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+  private authenticatedUser: any;
+  private unauthenticateUser = unauthenticateUser;
+
+  constructor() {
+    this.authenticatedUser = getAuthenticatedUser();
+  }
 
   ngOnInit() {}
 }

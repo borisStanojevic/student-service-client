@@ -5,7 +5,8 @@ import { Router } from "@angular/router";
 import { AppError } from "./../common/app-error";
 import {
   setAuthenticatedUser,
-  getAuthenticatedUser
+  getAuthenticatedUser,
+  unauthenticateUser
 } from "./../common/util/auth-util";
 
 @Component({
@@ -37,17 +38,19 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     const credentials = this.form.value;
 
-    this.authService.login(credentials).subscribe(
+    this.authService.create(credentials).subscribe(
       token => {
-        setAuthenticatedUser(token);
+        alert(JSON.stringify(token));
+        setAuthenticatedUser(token.token);
 
         const { id, role } = getAuthenticatedUser();
+        alert("ID " + id + " ROLE " + role);
         switch (role) {
           case "STUDENT":
-            this.router.navigate(["/students", { id }]);
+            this.router.navigate(["/students", id]);
             break;
           case "LECTURER":
-            this.router.navigate(["/lecturers", { id }]);
+            this.router.navigate(["/lecturers", id]);
             break;
           case "ADMIN":
             this.router.navigate(["/"]);

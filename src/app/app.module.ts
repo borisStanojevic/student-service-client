@@ -22,7 +22,10 @@ import { PaymentComponent } from "./payment/payment.component";
 import { CourseService } from "./services/course.service";
 import { ProfessorService } from "./services/professor.service";
 import { CourseLecturingService } from "./services/course-lecturing.service";
-import { AuthService } from "./services/auth.service";  
+import { AuthService } from "./services/auth.service";
+import { StudentCoursesComponent } from './student-courses/student-courses.component';
+import { LecturerCoursesComponent } from './lecturer-courses/lecturer-courses.component';
+import { StudentTransactionsComponent } from './student-transactions/student-transactions.component';  
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -39,7 +42,10 @@ import { AuthService } from "./services/auth.service";
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    PaymentComponent
+    PaymentComponent,
+    StudentCoursesComponent,
+    LecturerCoursesComponent,
+    StudentTransactionsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,50 @@
+<h2>My Courses</h2>
+
+<br />
+
+<h3>Credit: {{ this.credit }}</h3>
+
+<br />
+
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">Course Name</th>
+      <th scope="col">ECTS</th>
+      <th scope="col">Grade</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let myCourse of myCourses; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ myCourse.name }}</td>
+      <td>{{ myCourse.ects }}</td>
+      <td>
+        {{ myCourse.status === "PASSED" ? myCourse.grade : "Not graded yet" }}
+      </td>
+      <td>{{ myCourse.status }}</td>
+      <td>
+        <button
+          *ngIf="myCourse.status === 'NOT_PASSED'"
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="onApplyForExam(myCourse)"
+        >
+          Apply For Exam
+        </button>
+        <button
+          *ngIf="myCourse.status === 'APPLIED'"
+          type="button"
+          class="btn btn-success btn-sm"
+          (click)="onUnapplyForExam(myCourse)"
+        >
+          Unnaply For Exam
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,39 @@
+<h2>My Transactions</h2>
+
+<br />
+
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">ID</th>
+      <th scope="col">Timestamp</th>
+      <th scope="col">Type</th>
+      <th scope="col">Amount</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr
+      [class.table-warning]="myTransaction.isCharge"
+      *ngFor="let myTransaction of myTransactions; index as i"
+    >
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ myTransaction.id }}</td>
+      <td>{{ myTransaction.timestamp }}</td>
+      <td>
+        {{
+          myTransaction.type.charAt(0) +
+            myTransaction.type.substring(1).toLowerCase()
+        }}
+      </td>
+      <td>
+        {{
+          myTransaction.isCharge
+            ? "-" + myTransaction.amount
+            : myTransaction.amount
+        }}
+      </td>
+    </tr>
+  </tbody>
+</table>
