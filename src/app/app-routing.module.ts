@@ -13,6 +13,7 @@ import { RegisterComponent } from "./register/register.component";
 import { StudentCoursesComponent } from "./student-courses/student-courses.component";
 import { LecturerCoursesComponent } from "./lecturer-courses/lecturer-courses.component";
 import { StudentTransactionsComponent } from "./student-transactions/student-transactions.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -23,7 +24,10 @@ const routes: Routes = [
     path: "auth/logout",
     component: LoginComponent
   },
-
+  {
+    path: "profiles/me",
+    component: ProfileComponent
+  },
   {
     path: "auth/register",
     component: RegisterComponent
@@ -64,6 +68,7 @@ const routes: Routes = [
     path: "courses",
     component: CoursesComponent
   },
+
   {
     path: "",
     component: HomeComponent

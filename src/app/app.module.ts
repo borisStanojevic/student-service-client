@@ -25,7 +25,8 @@ import { CourseLecturingService } from "./services/course-lecturing.service";
 import { AuthService } from "./services/auth.service";
 import { StudentCoursesComponent } from './student-courses/student-courses.component';
 import { LecturerCoursesComponent } from './lecturer-courses/lecturer-courses.component';
-import { StudentTransactionsComponent } from './student-transactions/student-transactions.component';  
+import { StudentTransactionsComponent } from './student-transactions/student-transactions.component';
+import { ProfileComponent } from './profile/profile.component';  
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -45,7 +46,8 @@ import { StudentTransactionsComponent } from './student-transactions/student-tra
     PaymentComponent,
     StudentCoursesComponent,
     LecturerCoursesComponent,
-    StudentTransactionsComponent
+    StudentTransactionsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,24 @@
+<div class="form-group">
+  <label for="amount">Make a deposit:</label>
+  <input
+    placeholder="Enter the amount and hit enter"
+    id="amount"
+    type="number"
+    class="form-control"
+    (keyup.enter)="makeDeposit(amount.value)"
+    #amount
+    min="1"
+    max="5"
+    style="width: 19.5%"
+  />
+</div>
+
+<br />
+
+<h3>Credit: {{ this.myBalance }}</h3>
+
+<br />
+
 <h2>My Transactions</h2>
 
 <br />

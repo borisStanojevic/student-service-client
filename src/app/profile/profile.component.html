@@ -1,0 +1,75 @@
+<h2>Profile</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSave()">
+  <div class="form-group">
+    <input formControlName="id" id="id" type="hidden" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label
+    ><input
+      formControlName="email"
+      [placeholder]="!email.value && 'Enter email'"
+      id="email"
+      type="email"
+      class="form-control"
+    />
+    <small *ngIf="email.touched && email.invalid" class="text-error">
+      <span *ngIf="email.errors.required">Email required</span>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="firstName">First Name:</label
+    ><input
+      formControlName="firstName"
+      [placeholder]="!firstName.value && 'Enter first name'"
+      id="firstName"
+      type="text"
+      class="form-control"
+    />
+    <small *ngIf="firstName.touched && firstName.invalid" class="text-error">
+      <span *ngIf="firstName.errors.required">First name required</span>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Last Name:</label
+    ><input
+      formControlName="lastName"
+      [placeholder]="!lastName.value && 'Enter last name'"
+      id="lastName"
+      type="text"
+      class="form-control"
+    />
+    <small *ngIf="lastName.touched && lastName.invalid" class="text-error">
+      <span *ngIf="lastName.errors.required">Last name required</span>
+    </small>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address:</label
+    ><input
+      formControlName="address"
+      [placeholder]="!address.value && 'Enter address'"
+      id="address"
+      type="text"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number:</label
+    ><input
+      formControlName="phoneNumber"
+      [placeholder]="!phoneNumber.value && 'Enter phone number'"
+      id="phoneNumber"
+      type="text"
+      class="form-control"
+    />
+  </div>
+
+  <button [disabled]="!form.valid" type="submit" class="btn btn-success">
+    Save
+  </button>
+</form>

@@ -74,4 +74,34 @@ export class StudentService extends DataService {
       .map(response => response.json())
       .catch(this.handleError);
   }
+
+  makeDeposit(myJwt: string, amount: number) {
+    const url = `${this.url}/me/deposit`;
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${myJwt}`
+      })
+    };
+
+    return this.http
+      .post(url, { amount }, options)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
+
+  getBalance(myJwt: string) {
+    const url = `${this.url}/me/credit`;
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${myJwt}`
+      })
+    };
+
+    return this.http
+      .get(url, options)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
 }

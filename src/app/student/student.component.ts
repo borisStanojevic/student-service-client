@@ -14,16 +14,6 @@ import { BadInput } from "./../common/bad-input";
 import { CourseService } from "./../services/course.service";
 import { CourseLecturingService } from "../services/course-lecturing.service";
 
-let student = {
-  id: "69",
-  naturalId: "SF82016",
-  email: "m@g.com",
-  firstName: "First",
-  lastName: "Last",
-  address: "Somewehre 75B",
-  phoneNumber: "225-883"
-};
-
 @Component({
   selector: "app-student",
   templateUrl: "./student.component.html",
