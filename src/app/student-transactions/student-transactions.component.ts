@@ -19,14 +19,15 @@ export class StudentTransactionsComponent implements OnInit {
   }
 
   makeDeposit(value: number) {
-    if (value < 0 || value > 10000)
-      return alert("Please specify positive amount up to 10 000");
+    if (value <= 0 || value > 10000)
+      return alert("Please specify positive amount up to 10 000.");
 
-    if (confirm(`Are you sure you want to make ${value} deposit`)) {
+    if (confirm(`Are you sure you want to make ${value} deposit ?`)) {
       this.studentService.makeDeposit(getAuthToken(), value).subscribe(() => {
         this.studentService
           .getMyTransactions(getAuthToken())
           .subscribe(transactions => {
+            this.myBalance = 0;
             this.myTransactions = transactions;
             (error: AppError) => {
               alert(error);

@@ -47,14 +47,30 @@ export class ProfileComponent implements OnInit {
     return this.form.get("phoneNumber");
   }
 
-  onSave() {}
+  onSave() {
+    this.authService
+      .updateProfileData(getAuthToken(), this.form.value)
+      .subscribe(
+        () => {
+          alert("Succesfully updated profile data.");
+          this.authService.getProfileData(getAuthToken()).subscribe(
+            profileData => {
+              console.log(JSON.stringify(profileData));
+              this.form.patchValue(profileData);
+            },
+            (error: AppError) => alert(error)
+          );
+        },
+        (error: AppError) => {
+          alert(JSON.stringify(error));
+        }
+      );
+  }
 
   ngOnInit() {
     this.authService.getProfileData(getAuthToken()).subscribe(
       profileData => {
         console.log(JSON.stringify(profileData));
-        alert(JSON.stringify(profileData));
-
         this.form.patchValue(profileData);
       },
       (error: AppError) => alert(error)

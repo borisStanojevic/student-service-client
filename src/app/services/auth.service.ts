@@ -28,4 +28,19 @@ export class AuthService extends DataService {
       .map(response => response.json())
       .catch(this.handleError);
   }
+
+  updateProfileData(myJwt: string, profileData) {
+    const url = "http://localhost:8080/auth/me";
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${myJwt}`
+      })
+    };
+
+    return this.http
+      .put(url, profileData, options)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
 }

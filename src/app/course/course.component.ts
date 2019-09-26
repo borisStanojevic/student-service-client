@@ -107,9 +107,6 @@ export class CourseComponent implements OnInit {
   }
 
   onSave() {
-    // this.router.navigate(["/courses"], {
-    //   queryParams: { page: 1, orderBy: "name" }
-    // });
     const course = this.form.value;
     delete course.lecturerToAdd;
 
@@ -125,8 +122,17 @@ export class CourseComponent implements OnInit {
           else alert("Un unexpected error occured");
         }
       );
+    } else {
+      this.courseService.update(course).subscribe(
+        updatedCourse => {
+          this.router.navigate(["/courses"]);
+        },
+        (error: AppError) => {
+          if (error instanceof BadInput) alert("Bad request");
+          else alert("Un unexpected error occured");
+        }
+      );
     }
-    // alert(JSON.stringify(course));
   }
 
   ngOnInit() {

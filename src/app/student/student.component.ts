@@ -152,6 +152,15 @@ export class StudentComponent implements OnInit {
           alert(JSON.stringify(error));
         }
       );
+    } else {
+      this.studentService.update(student).subscribe(
+        updatedStudent => {
+          this.router.navigate(["/students"]);
+        },
+        (error: AppError) => {
+          alert(JSON.stringify(error));
+        }
+      );
     }
   }
 

@@ -118,6 +118,15 @@ export class ProfessorComponent implements OnInit {
           alert(JSON.stringify(error));
         }
       );
+    } else {
+      this.lecturerService.update(lecturer).subscribe(
+        updatedLecturer => {
+          this.router.navigate(["/lecturers"]);
+        },
+        (error: AppError) => {
+          alert(JSON.stringify(error));
+        }
+      );
     }
   }
 
