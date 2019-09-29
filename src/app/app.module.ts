@@ -26,7 +26,8 @@ import { AuthService } from "./services/auth.service";
 import { StudentCoursesComponent } from './student-courses/student-courses.component';
 import { LecturerCoursesComponent } from './lecturer-courses/lecturer-courses.component';
 import { StudentTransactionsComponent } from './student-transactions/student-transactions.component';
-import { ProfileComponent } from './profile/profile.component';  
+import { ProfileComponent } from './profile/profile.component';
+import { StudentDocumentsComponent } from './student-documents/student-documents.component';  
 
 @NgModule({
   //Ovdje registrujemo sve komponente da bi bile vidljive angularu
@@ -47,7 +48,8 @@ import { ProfileComponent } from './profile/profile.component';
     StudentCoursesComponent,
     LecturerCoursesComponent,
     StudentTransactionsComponent,
-    ProfileComponent
+    ProfileComponent,
+    StudentDocumentsComponent
   ],
   imports: [
     BrowserModule,

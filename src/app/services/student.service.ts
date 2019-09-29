@@ -46,6 +46,55 @@ export class StudentService extends DataService {
       .catch(this.handleError);
   }
 
+  getMyDocuments(myJwt: string) {
+    const url = `${this.url}/me/documents`;
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${myJwt}`
+      })
+    };
+
+    return this.http
+      .get(url, options)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
+
+  uploadDocument(myJwt: string, document: File) {
+    const url = `${this.url}/me/documents`;
+
+    let formData: FormData = new FormData();
+    formData.append("file", document);
+
+    const options = {
+      headers: new Headers({
+        Authorization: `Bearer ${myJwt}`
+      })
+    };
+
+    return this.http
+      .post(url, formData, options)
+      .map(response => {})
+      .catch(this.handleError);
+  }
+
+  deleteMyDocument(myJwt: string, documentId: number) {
+    const url = `${this.url}/me/documents/${documentId}`;
+
+    const options = {
+      headers: new Headers({
+        Authorization: `Bearer ${myJwt}`,
+        "Content-Type": "application/json"
+      })
+    };
+
+    return this.http
+      .delete(url, options)
+      .map(response => {})
+      .catch(this.handleError);
+  }
+
   applyForExam(myJwt: string, courseId: number) {
     const url = `${this.url}/me/courses/${courseId}/exams`;
     const options = {
@@ -101,6 +150,21 @@ export class StudentService extends DataService {
 
     return this.http
       .get(url, options)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
+
+  gradeStudent(lecturerJwt: string, courseAttendanceId: number, grade: number) {
+    const url = `${this.url}/courses/${courseAttendanceId}`;
+    const options = {
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${lecturerJwt}`
+      })
+    };
+
+    return this.http
+      .patch(url, { grade }, options)
       .map(response => response.json())
       .catch(this.handleError);
   }

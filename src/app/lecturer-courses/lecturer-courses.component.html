@@ -1,3 +1,51 @@
-<p>
-  lecturer-courses works!
-</p>
+<ng-container *ngFor="let course of this.myCourses">
+  <h3>
+    <b>{{ course.courseNaturalId }}</b> - {{ course.courseName }}
+  </h3>
+
+  <h4>Students</h4>
+
+  <table data-tableid="'course.courseId'" class="table table-hover">
+    <thead>
+      <tr class="table-primary">
+        <th scope="col">#</th>
+        <th scope="col">Student ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Status</th>
+        <!-- <th scope="col"></th> -->
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let student of course.students; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ student.studentNaturalId }}</td>
+        <td>
+          {{ student.firstName }}
+          {{ student.lastName }}
+        </td>
+        <td>{{ student.grade || "Not graded yet" }}</td>
+        <td>
+          <ng-container *ngIf="student.status == 'APPLIED'">
+            <button
+              *ngIf="student.status === 'APPLIED'"
+              type="button"
+              class="btn btn-success btn-sm"
+              (click)="onGradeStudent(student.studentCourseAttendanceId)"
+            >
+              Grade Student
+            </button></ng-container
+          >
+          <ng-container *ngIf="student.status == 'PASSED'">
+            Passed</ng-container
+          >
+          <ng-container *ngIf="student.status == 'NOT_PASSED'">
+            Not Passed</ng-container
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+</ng-container>

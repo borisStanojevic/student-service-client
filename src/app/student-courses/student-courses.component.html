@@ -6,7 +6,7 @@
 
 <br />
 
-<div class="list-group" >
+<div class="list-group">
   <button
     class="list-group-item d-flex justify-content-between align-items-center"
   >
@@ -37,7 +37,6 @@
       <th scope="col">ECTS</th>
       <th scope="col">Grade</th>
       <th scope="col">Status</th>
-      <th scope="col"></th>
     </tr>
   </thead>
 
@@ -49,24 +48,31 @@
       <td>
         {{ myCourse.status === "PASSED" ? myCourse.grade : "Not graded yet" }}
       </td>
-      <td>{{ myCourse.status }}</td>
+
       <td>
-        <button
-          *ngIf="myCourse.status === 'NOT_PASSED'"
-          type="button"
-          class="btn btn-success btn-sm"
-          (click)="onApplyForExam(myCourse)"
+        <ng-container *ngIf="myCourse.status == 'APPLIED'">
+          <button
+            *ngIf="myCourse.status === 'APPLIED'"
+            type="button"
+            class="btn btn-success btn-sm"
+            (click)="onUnapplyForExam(myCourse)"
+          >
+            Unnaply For Exam
+          </button>
+        </ng-container>
+        <ng-container *ngIf="myCourse.status === 'PASSED'">
+          Passed</ng-container
         >
-          Apply For Exam
-        </button>
-        <button
-          *ngIf="myCourse.status === 'APPLIED'"
-          type="button"
-          class="btn btn-success btn-sm"
-          (click)="onUnapplyForExam(myCourse)"
+        <ng-container *ngIf="myCourse.status === 'NOT_PASSED'">
+          <button
+            *ngIf="myCourse.status === 'NOT_PASSED'"
+            type="button"
+            class="btn btn-success btn-sm"
+            (click)="onApplyForExam(myCourse)"
+          >
+            Apply For Exam
+          </button></ng-container
         >
-          Unnaply For Exam
-        </button>
       </td>
     </tr>
   </tbody>

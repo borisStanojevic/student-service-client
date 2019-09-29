@@ -14,6 +14,7 @@ import { StudentCoursesComponent } from "./student-courses/student-courses.compo
 import { LecturerCoursesComponent } from "./lecturer-courses/lecturer-courses.component";
 import { StudentTransactionsComponent } from "./student-transactions/student-transactions.component";
 import { ProfileComponent } from "./profile/profile.component";
+import { StudentDocumentsComponent } from "./student-documents/student-documents.component";
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
     component: StudentTransactionsComponent
   },
   {
+    path: "students/me/documents",
+    component: StudentDocumentsComponent
+  },
+  {
     path: "students/:id",
     component: StudentComponent
   },
@@ -52,6 +57,7 @@ const routes: Routes = [
     path: "lecturers/me/courses",
     component: LecturerCoursesComponent
   },
+
   {
     path: "lecturers/:id",
     component: ProfessorComponent

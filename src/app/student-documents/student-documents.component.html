@@ -1,0 +1,62 @@
+<label for="file">Select Document: </label>
+<div class="form-group">
+  <div class="form-field">
+    <input
+      name="file"
+      type="file"
+      accept="application/pdf"
+      (change)="onDocumentSelect($event)"
+      required
+    />
+  </div>
+</div>
+<button
+  [disabled]="!this.documentToUpload"
+  (click)="onSubmit()"
+  class="btn btn-primary"
+>
+  Upload
+</button>
+
+<h2>
+  Uploaded Documents
+</h2>
+
+<br />
+
+<table class="table table-hover">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col">File Name</th>
+      <th scope="col">Uploaded On</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let myDocument of myDocuments; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <a
+          href="http://localhost:8080/documents/{{ myDocument.uri }}"
+          target="_blank"
+          >{{ myDocument.name }}</a
+        >
+      </td>
+
+      <td>
+        {{ myDocument.timestamp }}
+      </td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDeleteDocument(myDocument.id)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
