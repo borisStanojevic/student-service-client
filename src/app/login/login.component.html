@@ -1,10 +1,6 @@
 <h2>Login</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <p>
-    {{ form.value | json }}
-  </p>
-
   <div class="form-group">
     <label for="email">Email:</label
     ><input

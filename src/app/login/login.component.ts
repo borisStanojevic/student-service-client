@@ -39,28 +39,12 @@ export class LoginComponent implements OnInit {
     const credentials = this.form.value;
 
     this.authService.create(credentials).subscribe(
-      token => {
-        alert(JSON.stringify(token));
-        setAuthenticatedUser(token.token);
-
-        const { id, role } = getAuthenticatedUser();
-        alert("ID " + id + " ROLE " + role);
-        switch (role) {
-          case "STUDENT":
-            this.router.navigate(["/students", id]);
-            break;
-          case "LECTURER":
-            this.router.navigate(["/lecturers", id]);
-            break;
-          case "ADMIN":
-            this.router.navigate(["/"]);
-            break;
-          default:
-            break;
-        }
+      response => {
+        setAuthenticatedUser(response.token);
+        window.location.replace("/profiles/me");
       },
       (error: AppError) => {
-        alert(JSON.stringify(error));
+        alert("Invalid email/password.");
       }
     );
   }

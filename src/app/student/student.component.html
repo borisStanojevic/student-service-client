@@ -1,13 +1,6 @@
 <h2>Student</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSave()">
-  <p>
-    {{ form.value | json }}
-  </p>
-
-  <p>SVA PREDAVANJA KURSEVA</p>
-  <p>{{ this.allCourses | json }}</p>
-
   <div *ngIf="id.value !== 'new'" class="form-group">
     <input formControlName="id" id="id" type="hidden" class="form-control" />
   </div>

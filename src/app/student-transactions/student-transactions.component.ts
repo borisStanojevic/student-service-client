@@ -27,7 +27,6 @@ export class StudentTransactionsComponent implements OnInit {
         this.studentService
           .getMyTransactions(getAuthToken())
           .subscribe(transactions => {
-            this.myBalance = 0;
             this.myTransactions = transactions;
             (error: AppError) => {
               alert(error);
@@ -56,6 +55,7 @@ export class StudentTransactionsComponent implements OnInit {
     this.studentService
       .getMyTransactions(getAuthToken())
       .subscribe(transactions => {
+        console.log(JSON.stringify(transactions));
         this.myTransactions = transactions;
         (error: AppError) => {
           alert(error);

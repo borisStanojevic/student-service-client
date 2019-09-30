@@ -16,30 +16,13 @@ import { LecturersValidators } from "./../common/validation/lecturers.validators
 import { CourseService } from "./../services/course.service";
 import { AppError } from "./../common/app-error";
 import { BadInput } from "./../common/bad-input";
+import { ProfessorService } from "./../services/professor.service";
 
 enum LecturerRole {
   PROFESSOR = "Professor",
   ASSISTANT = "Assistant",
   DEMONSTRATOR = "Demonstrator"
 }
-
-const lecturers = [
-  { id: 1, name: "John", role: LecturerRole.PROFESSOR },
-  { id: 2, name: "Eric", role: LecturerRole.ASSISTANT },
-  { id: 3, name: "Woo", role: LecturerRole.DEMONSTRATOR }
-];
-
-let course = {
-  id: "69",
-  naturalId: "CS101",
-  name: "Computer Science 101",
-  ects: "9",
-  lecturers: [
-    { id: 1, name: "John", role: LecturerRole.PROFESSOR },
-    { id: 2, name: "Eric", role: LecturerRole.ASSISTANT },
-    { id: 3, name: "Woo", role: LecturerRole.DEMONSTRATOR }
-  ]
-};
 
 @Component({
   selector: "app-course",
@@ -48,10 +31,12 @@ let course = {
 })
 export class CourseComponent implements OnInit {
   private form: FormGroup;
+  private allLecturers: any[];
 
   constructor(
     private formBuilder: FormBuilder,
     private courseService: CourseService,
+    private lecturerService: ProfessorService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -94,10 +79,14 @@ export class CourseComponent implements OnInit {
   }
 
   onAddLecturer() {
-    const { id, name, role } = lecturers.find(
-      l => l.name === this.lecturerToAdd.value
+    const fN = this.lecturerToAdd.value.split(" ")[0];
+    const lN = this.lecturerToAdd.value.split(" ")[1];
+    const { id, firstName, lastName, role } = this.allLecturers.find(
+      l => l.firstName === fN && l.lastName === lN
     );
-    this.lecturers.push(this.formBuilder.group({ id, name, role }));
+    this.lecturers.push(
+      this.formBuilder.group({ id, firstName, lastName, role })
+    );
     this.lecturerToAdd.setValue("");
   }
 
@@ -153,25 +142,42 @@ export class CourseComponent implements OnInit {
       id = params.get("id");
     });
 
-    if (id !== "new") {
-      const lecturersCanNotBeEmpty = (control: AbstractControl) => {
-        if (this.lecturers.length === 0)
-          return { lecturersCanNotBeEmpty: true };
-      };
-      this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
-      this.lecturers.setValidators(Validators.required);
-      this.lecturerToAdd.updateValueAndValidity();
-      this.lecturers.updateValueAndValidity();
-    }
+    // if (id !== "new") {
+    //   const lecturersCanNotBeEmpty = (control: AbstractControl) => {
+    //     if (this.lecturers.length === 0)
+    //       return { lecturersCanNotBeEmpty: true };
+    //   };
+    //   this.lecturerToAdd.setValidators([lecturersCanNotBeEmpty]);
+    //   this.lecturers.setValidators(Validators.required);
+    //   this.lecturerToAdd.updateValueAndValidity();
+    //   this.lecturers.updateValueAndValidity();
+    // }
 
     if (id !== "new") {
-      this.courseService
-        .getById(id)
-        .subscribe(
-          course => this.form.patchValue(course),
-          (error: AppError) => console.log(JSON.stringify(error))
-        );
+      this.courseService.getById(id).subscribe(
+        course => {
+          course.lecturers.forEach((lecturer: any) => {
+            this.lecturers.push(
+              this.formBuilder.group({
+                id: lecturer.id,
+                firstName: lecturer.firstName,
+                lastName: lecturer.lastName,
+                role: LecturerRole[lecturer.role]
+              })
+            );
+            this.lecturers.updateValueAndValidity();
+          });
+          this.form.patchValue(course);
+          console.log(JSON.stringify(course));
+        },
+        (error: AppError) => console.log(JSON.stringify(error))
+      );
     }
-    // this.form.patchValue(course);
+    this.lecturerService.getAll().subscribe(
+      lecturers => {
+        this.allLecturers = lecturers;
+      },
+      (error: AppError) => alert(JSON.stringify(error))
+    );
   }
 }

@@ -48,11 +48,12 @@ export class StudentDocumentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.studentService
-      .getMyDocuments(getAuthToken())
-      .subscribe(
-        documents => (this.myDocuments = documents),
-        (error: AppError) => alert(JSON.stringify(error))
-      );
+    this.studentService.getMyDocuments(getAuthToken()).subscribe(
+      documents => {
+        console.log(JSON.stringify(documents));
+        this.myDocuments = documents;
+      },
+      (error: AppError) => alert(JSON.stringify(error))
+    );
   }
 }

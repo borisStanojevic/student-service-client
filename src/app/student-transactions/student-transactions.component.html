@@ -27,8 +27,6 @@
   <thead>
     <tr class="table-primary">
       <th scope="col">#</th>
-      <th scope="col">ID</th>
-      <th scope="col">Timestamp</th>
       <th scope="col">Type</th>
       <th scope="col">Amount</th>
     </tr>
@@ -40,20 +38,23 @@
       *ngFor="let myTransaction of myTransactions; index as i"
     >
       <th scope="row">{{ i + 1 }}</th>
-      <td>{{ myTransaction.id }}</td>
-      <td>{{ myTransaction.timestamp }}</td>
       <td>
         {{
-          myTransaction.type.charAt(0) +
-            myTransaction.type.substring(1).toLowerCase()
+          myTransaction.type === "DEPOSIT"
+            ? "Deposit"
+            : myTransaction.type === "EXAM_PAYMENT"
+            ? "Exam Payment"
+            : "Exam Payment Recall"
         }}
       </td>
-      <td>
-        {{
-          myTransaction.isCharge
-            ? "-" + myTransaction.amount
-            : myTransaction.amount
-        }}
+      <td [style.color]="!myTransaction.isCharge && 'green'">
+        <b>
+          {{
+            myTransaction.isCharge
+              ? "-" + myTransaction.amount
+              : "+" + myTransaction.amount
+          }}
+        </b>
       </td>
     </tr>
   </tbody>

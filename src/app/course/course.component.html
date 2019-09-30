@@ -1,10 +1,6 @@
 <h2>Course</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSave()">
-  <p>
-    {{ form.value | json }}
-  </p>
-
   <div *ngIf="id.value !== 'new'" class="form-group">
     <input formControlName="id" id="id" type="hidden" class="form-control" />
   </div>
@@ -81,7 +77,11 @@
         (click)="onRemoveLecturer(lecturer)"
         class="list-group-item"
       >
-        <b>{{ lecturer.controls.name.value }}</b> -
+        <b
+          >{{ lecturer.controls.firstName.value }}
+          {{ lecturer.controls.lastName.value }}</b
+        >
+        -
         <b>{{ lecturer.controls.role.value }}</b>
       </li>
     </ul>

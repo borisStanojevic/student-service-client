@@ -3,6 +3,7 @@ import {
   getAuthenticatedUser,
   unauthenticateUser
 } from "../common/util/auth-util";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -11,9 +12,13 @@ import {
 })
 export class NavbarComponent implements OnInit {
   private authenticatedUser: any;
-  private unauthenticateUser = unauthenticateUser;
 
-  constructor() {
+  doUnauthenticateUser() {
+    unauthenticateUser();
+    window.location.replace("/auth/login");
+  }
+
+  constructor(private router: Router) {
     this.authenticatedUser = getAuthenticatedUser();
   }
 

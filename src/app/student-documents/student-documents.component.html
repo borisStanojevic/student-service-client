@@ -19,7 +19,7 @@
 </button>
 
 <h2>
-  Uploaded Documents
+  My Documents
 </h2>
 
 <br />
@@ -44,9 +44,8 @@
           >{{ myDocument.name }}</a
         >
       </td>
-
       <td>
-        {{ myDocument.timestamp }}
+        {{ myDocument.uri.split("_")[0] }}
       </td>
       <td>
         <button

@@ -33,5 +33,4 @@ export function setAuthenticatedUser(token) {
 
 export function unauthenticateUser() {
   localStorage.clear();
-  window.location.replace("/auth/login");
 }
